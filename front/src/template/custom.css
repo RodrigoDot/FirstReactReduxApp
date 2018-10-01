@@ -1,0 +1,26 @@
+.btn {
+  margin-left: 5px;
+}
+
+.markedAsDone {
+  color: #777;
+  text-decoration: line-through;
+}
+
+.table-body-actions {
+  border-left: 1px solid #DDD;
+  width: 110px;
+}
+
+.table-body-description {
+  /* width: 70% */
+}
+
+.table-header-actions {
+  text-align: center;
+  width: 110px;
+}
+
+.table-header-description {
+  /* width: 70% */
+}
