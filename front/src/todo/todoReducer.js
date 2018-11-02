@@ -10,8 +10,8 @@ export default (state = INITIAL_STATE, action) => {
     case 'TODO_SERACHED':
       return { ...state, list: action.payload.data }
     case 'TODO_ADDED':
-      return { ...state, description: '' }
     case 'TODO_REMOVED':
+    case 'TODO_CLEAR':
       return { ...state, description: '' }
     default:
       return state

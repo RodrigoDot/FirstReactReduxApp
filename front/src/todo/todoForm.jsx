@@ -10,7 +10,8 @@ import IconButton from '../template/iconButton'
 import {
   changeDescription,
   search,
-  add
+  add,
+  clear
  } from './todoActions'
 
 class TodoForm extends Component{
@@ -24,21 +25,21 @@ class TodoForm extends Component{
   }
 
   keyHandler(e) {
-    const { add, search, description } = this.props
+    const { add, search, description, clear } = this.props
     if(e.key === 'Enter') {
       e.shiftKey ? search() : add(description)
     } else if(e.key === 'Escape') {
-      this.props.handleClear()
+      clear()
     }
   }
 
   render() {
-    const { add, search, description } = this.props
+    const { add, search, description, clear, changeDescription } = this.props
     return (
       <div className="todoForm" role="form">
         <Grid cols='7 9 9 10'>
           <input id='description' className="form-control"
-            onChange={ this.props.changeDescription }
+            onChange={ changeDescription }
             onKeyUp={ this.keyHandler }
             value={ description } placeholder="Tarefa">
           </input>
@@ -47,9 +48,9 @@ class TodoForm extends Component{
           <IconButton style='primary' icon='plus'
             onClick={ () => add(description) } />
           <IconButton style='info' icon='search'
-            onClick={ () => search() } />
+            onClick={ () => search(description) } />
           <IconButton style='light' icon='eraser'
-            onClick={ this.props.handleClear } />
+            onClick={ () => clear() } />
         </Grid>
       </div>
     )
@@ -64,6 +65,7 @@ const mapDispatchToProps = (dispatch) => bindActionCreators({
   changeDescription,
   search,
   add,
+  clear
 }, dispatch)
 
 export default connect(mapStateToProps, mapDispatchToProps)(TodoForm)
