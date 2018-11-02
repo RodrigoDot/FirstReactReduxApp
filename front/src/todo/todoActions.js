@@ -26,5 +26,37 @@ export const add = (description) => {
     }))
     .then(resp => dispatch(search()))
   }
+}
 
+export const markAsDone = (task) => {
+  return dispatch => {
+    axios.put(`${URL}/${task._id}`, { ...task, done: true })
+    .then(resp => dispatch({
+      type: 'MARKED_AS_DONE',
+      payload: resp.data
+    }))
+    .then(resp => dispatch(search()))
+  }
+}
+
+export const markAsUndone = (task) => {
+  return dispatch => {
+    axios.put(`${URL}/${task._id}`, { ...task, done: false})
+    .then(resp => dispatch({
+      type: 'MARKED_AS_UNDONE',
+      payload: resp.data
+    }))
+    .then(resp => dispatch(search()))
+  }
+}
+
+export const taskRemove = (task) => {
+  return dispatch=> {
+    axios.delete(`${URL}/${task._id}`)
+    .then(resp => dispatch({
+      type: 'TODO_REMOVED',
+      payload: resp.data
+    }))
+    .then(resp => dispatch(search()))
+  }
 }

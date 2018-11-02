@@ -1,30 +1,37 @@
 import React from 'react'
 
+import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
 
 import Grid from '../template/grid'
 import IconButton from '../template/iconButton'
 import If from '../helpers/if'
+import {
+  markAsDone,
+  markAsUndone,
+  taskRemove
+} from './todoActions'
 
 const TodoList = props => {
 
   const renderRows = () => {
+    const { markAsDone, markAsUndone, taskRemove } = props
     const list = props.list || []
     return list.map(task => (
       <tr key={ task._id }>
-        <td className={ task.done ? 'markedAsDone table-body-description' : 'table-body-description' }>{ task.description }</td>
+        <td className={ task.done ? 'markAsDone table-body-description' : 'table-body-description' }>{ task.description }</td>
         <td className='table-body-actions'>
-          <If test={!task.done}>
+          <If test={ !task.done }>
             <IconButton style='success' icon='check'
-            onClick={ () => props.handleDone(task) } />
+            onClick={ () => markAsDone(task) } />
           </If>
-          <If test={task.done}>
+          <If test={ task.done }>
             <IconButton style='warning' icon='undo'
-            onClick={ () => props.handleUndone(task) } />
+            onClick={ () => markAsUndone(task) } />
           </If>
-          <If test={task.done}>
+          <If test={ task.done }>
             <IconButton style='danger' icon='trash'
-              onClick={ () => props.handleRemove(task) } />
+              onClick={ () => taskRemove(task) } />
           </If>
         </td>
       </tr>
@@ -53,4 +60,10 @@ const mapStateToProps = state => ({
   list: state.todo.list
 })
 
-export default connect(mapStateToProps)(TodoList)
+const mapDispatchToProps = (dispatch) => bindActionCreators({
+  markAsDone,
+  markAsUndone,
+  taskRemove
+}, dispatch)
+
+export default connect(mapStateToProps, mapDispatchToProps)(TodoList)
