@@ -1,24 +1,14 @@
 const INITIAL_STATE = {
-  description: 'Ler livro',
-  list: [{
-    _id: 1,
-    description: 'Pagar fatura do cartao',
-    done: true
-  }, {
-    _id: 2,
-    description: 'Reuniao com a eequipe as 10:00',
-    done: false
-  }, {
-    _id: 3,
-    description: 'Consulta medica na terca depois do almoco',
-    done: false
-  }]
+  description: '',
+  list: [],
 }
 
 export default (state = INITIAL_STATE, action) => {
   switch(action.type) {
     case 'DESCRIPTION_CHANGED':
-      return {...state, description: action.payload}
+      return { ...state, description: action.payload }
+    case 'TODO_SERACHED':
+      return { ...state, list: action.payload.data }
     default:
       return state
   }
